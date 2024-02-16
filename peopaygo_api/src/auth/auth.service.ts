@@ -16,7 +16,6 @@ export default class AuthService {
       key: 'email',
       value: email
     });
-    console.log(userByEmail);
 
     if (userByEmail) {
       const match = await bcrypt.compare(password, userByEmail.password);

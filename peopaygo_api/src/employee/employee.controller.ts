@@ -17,6 +17,7 @@ import EmployeeService from './employee.service';
 import CreateEmployeeDto from './dto/create-employee.dto';
 import { ManageEmployeeGuard } from 'src/auth/guards/mange-employ.guard';
 import EditEmployeeDto from './dto/edit-employee.dto';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 
 @ApiTags('Employee')
 @ApiHeader({
@@ -29,6 +30,7 @@ export default class EmployeeController {
   constructor(private employeeService: EmployeeService) { }
 
   @Post()
+  @Roles('CLIENT')
   public async createEmployee(@Body() employee: CreateEmployeeDto) {
     return await this.employeeService.createEmployee(employee);
   }

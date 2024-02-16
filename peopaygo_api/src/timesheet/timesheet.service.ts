@@ -120,8 +120,8 @@ export class TimesheetService {
         skip,
         take: limit,
         relations: {
-          user: true
-          // employees: true
+          user: true,
+          employees: true
         },
         where: {
           user: {
@@ -140,6 +140,57 @@ export class TimesheetService {
         totalPages,
         hasNextPage
       };
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+
+    }
+  }
+
+  public async getAllPendingTimesheets(page: number, limit: number) {
+    try {
+      const skip = (page - 1) * limit;
+      const [foundTimesheets, total] = await this.timesheetRepository.findAndCount({
+        skip,
+        take: limit,
+        where: {
+          status: TIMESHEET_STATUS.PENDING
+        },
+      });
+
+      const totalPages = Math.ceil(total / limit);
+      const hasNextPage = page < totalPages;
+
+      return {
+        foundTimesheets,
+        total,
+        page,
+        totalPages,
+        hasNextPage
+      };
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+
+    }
+  }
+
+  public async updateTimesheetStatus(id: number, status: TIMESHEET_STATUS) {
+    try {
+      const foundTimesheet = await this.getTimesheetById(id);
+      foundTimesheet.status = status;
+
+      return await this.timesheetRepository.save(foundTimesheet);
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+
+    }
+  }
+
+  public async addTimesheetNote(id: number, notes: string) {
+    try {
+      const foundTimesheet = await this.getTimesheetById(id);
+      foundTimesheet.notes = notes;
+
+      return await this.timesheetRepository.save(foundTimesheet);
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
 

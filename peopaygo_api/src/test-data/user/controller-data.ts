@@ -35,7 +35,6 @@ export const saveUser: User = {
 }
 
 export const editUserTestData: EditUserDto = {
-  password: 'hdus23532ferferf4',
   role: ROLES.ADMIN,
   company: 'Facebook'
 }
@@ -54,7 +53,6 @@ export const existingUserController = {
 
 export const updatedUser = {
   ...existingUserController,
-  password: editUserTestData.password,
   role: editUserTestData.role,
   company: editUserTestData.company,
   updatedAt: new Date("2022-01-01"),
@@ -63,7 +61,6 @@ export const updatedUser = {
 
 export const updatedUserController = {
   ...existingUserController,
-  password: editUserTestData.password,
   role: editUserTestData.role,
   company: editUserTestData.company,
   updated_at: new Date("2022-01-01"),

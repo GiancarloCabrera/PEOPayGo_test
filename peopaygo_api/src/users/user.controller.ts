@@ -1,10 +1,13 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
   Param,
   ParseIntPipe,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import UserService from './user.service';
@@ -39,4 +42,14 @@ export default class UserController {
   ) {
     return this.usersService.editUser(id, user);
   }
+
+  @Get('/list')
+  @AdminAccess()
+  public async getClients(
+    @Query('page', ParseIntPipe) page: number = 1,
+    @Query('limit', ParseIntPipe) limit: number = 10,
+  ) {
+    return this.usersService.getClients(page, limit);
+  }
+
 }

@@ -3,10 +3,6 @@ import { IsEnum, IsOptional, IsString } from 'class-validator';
 import { ROLES } from 'src/constants/roles';
 
 export class EditUserDto {
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  password?: string;
 
   @ApiProperty()
   @IsOptional()

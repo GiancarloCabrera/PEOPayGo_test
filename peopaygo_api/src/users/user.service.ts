@@ -54,8 +54,6 @@ export default class UserService {
       if (foundUser.role === ROLES.ADMIN) throw new ErrorManager({ type: 'UNAUTHORIZED', msg: 'You cannot edit this user...' });
 
       Object.assign(foundUser, user);
-      const hashedPwd = await bcrypt.hash(user.password, +process.env.HASH_SALT);
-      foundUser.password = hashedPwd;
 
       const editUser = await this.userRepository.save(foundUser);
       return editUser;
@@ -84,6 +82,32 @@ export default class UserService {
       if (!userFound) throw new ErrorManager({ type: 'NOT_FOUND', msg: 'User not found...' });
 
       return userFound;
+    } catch (error) {
+      throw ErrorManager.createSignatureError(error.message);
+    }
+  }
+
+  public async getClients(page: number, limit: number) {
+    try {
+      const skip = (page - 1) * limit;
+      const [clients, total] = await this.userRepository.findAndCount({
+        skip,
+        take: limit,
+        where: {
+          role: ROLES.CLIENT
+        },
+      });
+
+      const totalPages = Math.ceil(total / limit);
+      const hasNextPage = page < totalPages;
+
+      return {
+        clients,
+        total,
+        page,
+        totalPages,
+        hasNextPage
+      };
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }

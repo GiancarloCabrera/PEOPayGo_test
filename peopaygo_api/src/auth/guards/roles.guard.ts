@@ -26,7 +26,7 @@ export class RolesGuard implements CanActivate {
     const { roleUser } = req;
 
     if (roles === undefined) {
-      // If the user is not admin, return true
+      // If it is not admin, return true
       if (!admin) {
         return true;
       } else if (admin && roleUser === admin) {

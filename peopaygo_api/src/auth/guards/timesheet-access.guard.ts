@@ -33,9 +33,11 @@ export class TimesheetAccessGuard implements CanActivate {
       return true;
     } if (handler.name === 'getTimesheetListByClientId') {
       const { clientId } = req.params;
-
       if (idUser !== parseInt(clientId)) throw new UnauthorizedException('Unauthorized action...');
 
+      return true;
+    }
+    if (handler.name === 'getAllPendingTimesheets' || handler.name === 'updateTimesheetStatus' || handler.name === 'addTimesheetNote') {
       return true;
     }
     else {

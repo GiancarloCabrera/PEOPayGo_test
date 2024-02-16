@@ -19,7 +19,6 @@ export class ManageEmployeeGuard implements CanActivate {
 
     const handler = context.getHandler();
     const req = context.switchToHttp().getRequest<Request>();
-    console.log(req, 'HANDLER: ', handler.name);
 
     // Get user logged id
     const loggedUser = req.idUser;

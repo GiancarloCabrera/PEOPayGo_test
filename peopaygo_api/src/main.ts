@@ -8,11 +8,18 @@ async function bootstrap() {
 
   const reflector = app.get(Reflector);
   app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
-  // Activate CORS
-  // app.enableCors({
-  //   origin: 'FRONTEND URL',
-  //   credentials: true
-  // });
+  // Activate CORS ---> It is accepting any url path, please add the frontend utl to be used...
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    allowedHeaders: '*',
+    credentials: true,
+    maxAge: 3600,
+    //   origin: 'FRONTEND URL',
+    //   credentials: true
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       transformOptions: {

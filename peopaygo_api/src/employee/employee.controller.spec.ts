@@ -249,7 +249,7 @@ describe('EmployeeController', () => {
         jest.spyOn(manageEmployeeGuard, 'canActivate').mockResolvedValue(true)
         jest.spyOn(employeeRepository, 'findAndCount').mockResolvedValueOnce(expectedFindAndCountList);
 
-        const response = await request(app.getHttpServer()).get(`/employee/list/${props.clientId}?page=${props.page}&limit=${props.limit}`).send();;
+        await request(app.getHttpServer()).get(`/employee/list/${props.clientId}?page=${props.page}&limit=${props.limit}`).send();;
       } catch (error) {
         expect(error.statusCode).toBe(400);
       }
