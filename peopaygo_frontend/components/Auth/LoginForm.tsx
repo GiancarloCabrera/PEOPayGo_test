@@ -7,7 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Swal from 'sweetalert2';
 
 
-const paperStyle = { padding: 20, height: '35vh', width: 350, margin: "20px auto" }
+const paperStyle = { padding: 20, height: '300px', width: 350, margin: "20px auto" }
 const btnstyle = { margin: '8px 0' }
 
 const LoginForm = () => {
