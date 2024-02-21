@@ -17,6 +17,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AdminAccess } from 'src/auth/decorators/admin.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { EditUserDto } from './dto/edit-user.dto';
+import { PublicAccess } from 'src/auth/decorators/public.decorator';
 
 @ApiTags('User')
 @Controller('user')
@@ -31,6 +32,12 @@ export default class UserController {
   @Post()
   @AdminAccess()
   public async createUser(@Body() user: CreateUserDto) {
+    return await this.usersService.createUser(user);
+  }
+
+  @Post('/admin')
+@PublicAccess()
+  public async createFirstAdmin(@Body() user: CreateUserDto) {
     return await this.usersService.createUser(user);
   }
 

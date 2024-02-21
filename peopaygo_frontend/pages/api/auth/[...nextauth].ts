@@ -10,7 +10,7 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const response = await axios.post('http://localhost:8000/auth/login', {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}auth/login`, {
           email: credentials?.email,
           password: credentials?.password
         }, {
